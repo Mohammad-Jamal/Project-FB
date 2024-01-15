@@ -1,0 +1,1588 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Facebook Clone</title>
+    <link rel="icon" href="fb-posts/Screenshot 2024-01-14 213027.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;1,700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      body {
+        font-family:'Segoe UI',sans-serif;
+        padding-top: 72px;
+        background-color: rgb(233,235,238);
+
+      }
+
+
+      input {
+        outline: none;
+        border-color: none;
+      }
+
+      .header {
+        height: 55px;
+        background-color: white;
+        display: flex;
+        flex-direction: row;
+        position: fixed;
+        justify-content: space-between;
+        align-items: center;
+        top: 0;
+        left: 0;
+        right: 0;
+        box-shadow:0 0 4px rgba(0,0,0,0.2);
+        z-index: 200;
+      }
+      .left-section {
+        width: 286px;
+        display: flex;
+        align-items: center;
+        margin-left: 17px;
+        margin-right: 3px;
+
+      }
+      .fb-icon {
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+      }
+      .search-icon {
+        width: 20px;
+        height: 16px;
+        object-fit: contain;
+        background-color: rgb(233,235,238);
+        padding: 12px 5px 12.2px 10px;
+        margin-left: 8px;
+        border-top-left-radius: 30px;
+        border-bottom-left-radius: 30px;
+
+
+      }
+      .search {
+        padding: 11.9px 20px 11.9px 0px;
+        background-color: rgb(233,235,238);
+        border: none;
+        font-size: 14px;
+        border-radius: 25px;
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+
+        
+      }
+      @media (max-width: 1260px) {
+        .search {
+          width: 0;
+          padding-left: 0;
+
+        }
+        .search-icon {
+          padding-right: 0;
+        }
+      }
+      .search::placeholder {
+        font-size: 15px;
+        font-weight: 400;
+
+      }
+      .middle-section {
+        width: 550px;
+        background-color: white;
+        margin-left: -123px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-shrink: 0;
+        
+      }
+      .blue,
+      .blue-h {
+        position: relative;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 6px;
+      }
+      .blue-bar {
+        height: 3px;
+        background-color: rgb(24, 119, 242);
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+      }
+      .blue .tooltip,
+      .blue-h .tooltip-h {
+        position: absolute;
+        color: white;
+        background-color: rgba(0, 0, 0, 0.658);
+        font-size: 13px;
+        padding: 8px 10px 8px 10px;
+        bottom: -35px;
+        border-radius: 7px;
+        opacity: 0;
+        transition: opacity 0.15s,
+        background-color 0.15s ;
+        pointer-events: none;
+        white-space: nowrap;
+      }
+      .blue:hover .tooltip,
+      .blue-h:hover .tooltip-h {
+        opacity: 1;
+      }
+      .blue:hover {
+        background-color:rgba(218, 223, 229, 0.675);
+      }
+      .home-icon {
+        width: 40px;
+        height: 45px;
+        object-fit: contain;
+        margin-top: 5px;
+        padding: 0px 37px 5px 37px;
+      }
+      .video-icon {
+        width: 25px;
+        height: 30px;
+        object-fit: contain;
+        margin-top: 5px;
+        padding: 6px 38px 6px 38px;
+      }
+      .market-icon {
+        width: 25px;
+        height: 30px;
+        object-fit: contain;
+        margin-top: 5px;
+        padding: 6px 38px 6px 38px;
+      }
+      .group-icon {
+        width: 25px;
+        height: 35px;
+        object-fit: contain;
+        margin-top: 5px;
+        padding: 3px 38px 4px 38px;
+      }
+      .games-icon {
+        width: 30px;
+        height: 42px;
+        object-fit: contain;
+        margin-top: 5px;
+        padding: 0px 38px 0px 38px;
+      }
+      .right-section {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 5px;
+        padding-left: 10px;
+        width: 185px;
+        flex-shrink: 0;
+        margin-right: 17px;
+      }
+      .apps,
+      .messenger,
+      .notifications,
+      .account {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        white-space: nowrap;
+      }
+      .count {
+        position: absolute;
+        top: -8px;
+        right: -5px;
+        color: white;
+        background-color: rgb(236, 26, 26);
+        font-size: 10px;
+        padding: 4px 5px 2px 5px;
+        border-radius: 15px;
+        font-weight: 700;
+      }
+      .apps .tooltip,
+      .messenger .tooltip,
+      .notifications .tooltip,
+      .account .tooltip {
+        position: absolute;
+        color: white;
+        background-color: rgba(0, 0, 0, 0.658);
+        font-size: 13px;
+        padding: 8px 10px 8px 10px;
+        bottom: -37px;
+        border-radius: 7px;
+        opacity: 0;
+        transition: opacity 0.15s;
+        pointer-events: none;
+        white-space: nowrap;
+
+      }
+      .apps:hover .tooltip,
+      .messenger:hover .tooltip,
+      .notifications:hover .tooltip,
+      .account:hover .tooltip {
+        opacity: 1;
+      }
+
+      .apps-icon {
+        width: 20px;
+        height: 38px;
+        object-fit: contain;
+        background-color: rgb(233,235,238);
+        padding: 1px 10px;
+        border-radius: 80px;
+      }
+      .message-icon {
+        width: 40px;
+        height: 41px;
+        background-color: rgb(233,235,238);
+        object-fit: contain;
+        border-radius: 100px;
+      }
+      .bell-icon {
+        width: 35px;
+        height: 30px;
+        background-color: rgb(233,235,238);
+        object-fit: contain;
+        border-radius: 100px;
+        padding: 6px 3.1px;
+      }
+
+      .profile-icon {
+        width: 40px;
+        height: 40px;
+        background-color: rgb(233,235,238);
+        object-fit: cover;
+        border-radius: 100px;
+      }
+      .apps-icon:hover,
+      .message-icon:hover,
+      .bell-icon:hover,
+      .profile-icon:hover {
+        background-color: rgb(214, 216, 221);
+      }
+      .sidebar {
+        display: none;
+      }
+      @media (min-width: 1099.1px) {
+        body {
+          padding-left: 360px;
+        }
+        .sidebar {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-top: 15px;
+        position: fixed;
+        top: 55px;
+        left: 0;
+        width: 350px;
+        margin-left: 7px;
+        }
+        .sidebar-link {
+          font-family: "Segoe UI", Arial, sans-serif;
+          font-size: 15px;
+          font-weight: 500;
+
+        }
+        .sidebar-link {
+          display: flex;
+          flex-direction: row;
+          justify-content: start;
+          align-items: center;
+          padding: 10px 8px 9px 8px;
+          border-radius: 7px;
+          cursor: pointer;
+          transition: background-color 0.15s;
+
+        }
+        .sidebar-link:hover {
+          background-color: rgb(214, 216, 221);
+        }
+        .profile-account {
+          width: 30px;
+          height: 30px;
+          object-fit: cover;
+          background-color:rgb(24, 119, 242);
+          border-radius: 25px;
+          margin-right: 10px;
+        }
+        .friend-icon {
+          width: 25px;
+          height: 25px;
+          object-fit: cover;
+          margin-right: 15px;
+        }
+        .marketplace {
+          width: 25px;
+          height: 25px;
+          object-fit: cover;
+          margin-right: 15px;
+        }
+        .feeds {
+          width: 30px;
+          height: 30px;
+          object-fit: cover;
+          margin-right: 10px;
+        }
+        .events {
+          width: 25px;
+          height: 25px;
+          object-fit: cover;
+          margin-right: 15px;
+        }
+        .memories {
+          width: 20px;
+          height: 20px;
+          object-fit: cover;
+          margin-right: 20px;
+        }
+        .saved {
+          width: 20px;
+          height: 20px;
+          object-fit: cover;
+          margin-right: 20px;
+        }
+        .groups {
+          width: 25px;
+          height: 25px;
+          object-fit: cover;
+          margin-right: 15px;
+        }
+        .video {
+          width: 30px;
+          height: 30px;
+          object-fit: cover;
+          margin-right: 10px;
+        }
+        .ads {
+          width: 25px;
+          height: 25px;
+          object-fit: cover;
+          margin-right: 15px;
+        }
+        .funds {
+          width: 25px;
+          height: 25px;
+          object-fit: cover;
+          margin-right: 15px;
+        }
+        .slide {
+          width: 9px;
+          height: 9px;
+          object-fit: cover;
+          margin-right: 11px;
+          margin-left: 5px;
+          background-color: rgb(213, 216, 224);
+          border-radius: 20px;
+          padding: 8px;
+          cursor:none;
+        }
+      }
+
+
+      .shorts {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        flex-shrink: 0;
+        flex: 1;
+ 
+      }
+      .container {
+        width: 140px;
+        height: 245px;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0 3px rgba(0,0,0,0.3);
+        position: relative;
+        background-color: white;
+         
+
+      }
+      .add {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        
+      }
+      .add button {
+        position: absolute;
+        bottom: 35px;
+      }
+      .image-section  {
+        width: 140px;
+        height: 180px;
+        background-color: lightcoral;
+        overflow: hidden;
+      }
+      .image-section .image {
+        width: 100%;
+        object-fit: cover;
+        transition: transform 0.15s;
+      }
+      .container:hover .image {
+        transform : scale(1.03);
+      }
+      .container .text {
+        font-family:'Segoe UI',sans-serif;
+        font-size: 13px;
+        font-weight: 500;
+        text-align: center;
+        margin-top: 38px;
+
+
+      }
+      .container .overlay {
+        background-color: rgba(0, 0, 0, 0.179);
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 0.15s;
+      }
+      .container:hover .overlay {
+        opacity: 0.5;
+      }
+      .add button {
+        color: white;
+        background-color:rgb(24, 119, 242);
+        border-style: solid;
+        border-width: 3.6px;
+        border-color: white;
+        padding: 3.5px 11px;
+        border-radius: 50px;
+        font-size: 25px;
+      }
+      .container:hover {
+        cursor: pointer;
+      }
+      .container .image-section1 {
+        width: 140px;
+        height: 250px;
+
+      }
+      .container1 {
+        width: 140px;
+        height: 245px;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0 3px rgba(0,0,0,0.3);
+        position: relative;
+        margin-left: 8px;
+      }
+      .image-section1 {
+        width:100%;
+        height: 100%;
+        transition: transform 0.15s;
+      }
+      .image1 {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .container1:hover .image-section1 {
+        transform: scale(1.03);
+        cursor: pointer;
+      }
+      .shade {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 35px;
+        background-color: rgba(0, 0, 0, 0.38);
+        box-shadow: 0px 0px 25px rgba(0,0,0,0.9);
+        border: none;
+
+      }
+      .text1 {
+        position: absolute;
+        bottom : 0;
+        font-family:'Segoe UI',sans-serif;
+        margin-left: 12px;
+        font-size: 13px;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 8px;
+
+      }
+      .dp-icon {
+        position: absolute;
+        top: 0;
+        width: 35px;
+        margin-top: 11px;
+        margin-left:10px;
+      }
+      .dp-image {
+        width: 35px;
+        height: 35px;
+        object-fit: cover;
+        border-radius: 25px;
+        border-style: solid;
+        border-width: 4px;
+        border-color: rgb(24, 119, 242);
+
+      }
+      .overlay1 {
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.221);
+        position: absolute;
+        top: 0;
+        opacity: 0;
+        transition: opacity 0.15s;
+      }
+      .container1:hover .overlay1 {
+        opacity: 0.9;
+        cursor: pointer;
+      }
+      @media screen  and (max-width:877.9px) {
+        .contacts-sidebar {
+          display: none;
+        }
+      }
+
+      @media screen and (min-width:878px) {
+        body {
+          padding-right: 360px;
+        }
+        .contacts-sidebar {
+          position: fixed ;
+          top: 55px;
+          bottom: 0;
+          right: 0;
+          width: 350px;
+          height: 900px;
+          padding-top: 15px;
+          z-index: 100;
+          overflow-y: auto ;
+        }
+        .contacts-sidebar::-webkit-scrollbar {
+          width: 8px;
+
+        }
+        .contacts-sidebar::-webkit-scrollbar-track {
+          background-color: rgba(128, 128, 128, 0.707);
+        }
+        .contacts-sidebar::-webkit-scrollbar-thumb {
+          background-color: rgba(128, 128, 128, 0.188);
+        }
+        .search-contact {
+          width: 16px;
+          height: 17px;
+          object-fit: cover;
+          padding: 5px 5px 5px 6.3px;
+          border-radius: 30px;
+          margin-top: 5px;
+        }
+        .search-contact:hover {
+          background-color: rgba(207, 211, 216, 0.763);
+        }
+        .contact-flex {
+          margin-left: 10px;
+          margin-bottom: 4px;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          margin-right: 16px;
+        }
+        .title {
+          font-size:17px;
+          font-weight: 500;
+          color: #65676B;
+        }
+        .contact-search {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          width: 70px;
+          cursor: pointer;
+        }
+        .three-dots {
+          font-weight: 1000;
+          color: #65676B;
+          padding-bottom: 10px;
+          padding-left: 8px;
+          padding-right: 8px;
+          border-radius: 60px;
+          cursor: pointer;
+        }
+        .three-dots:hover {
+          background-color: rgba(207, 211, 216, 0.763);
+        }
+        .contacts {
+          display: flex;
+          justify-content: start;
+          align-items: center;
+          margin-left: 10px;
+          padding: 9px;
+          border-radius: 8px;
+          cursor: pointer;
+        }
+        .contacts:hover {
+          background-color:rgb(214, 216, 221);
+        }
+        .contact-dp {
+          width: 30px;
+          height: 30px;
+          position: relative;
+        }
+        .active {
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          width: 6.22px;
+          height: 6.22px;
+          background-color: #31A24C;
+          border-style: solid;
+          border-width: 2.3px;
+          border-color: white;
+          border-radius: 8px;
+
+        }
+        .inactive {
+          position: absolute;
+          bottom: -5px;
+          right: -5px;
+          color: #31A24C;
+          background-color: rgb(233,235,238);
+          font-size: 8px;
+          font-weight: 700;
+          border-style: solid;
+          border-color: rgb(233,235,238);
+          border-width: 2.3px;
+          border-radius: 10px;
+
+        }
+        .dpc {
+          width: 30px;
+          height: 30px;
+          object-fit: cover;
+          border-radius: 15px;
+        }
+        .contact-dp .dpc1 {
+          width: 30px;
+          height: 30px;
+          object-fit: cover;
+          border-radius: 30px;
+          border-style: solid;
+          border-color: rgb(24, 119, 242);
+          border-width: 3.6px;
+        }
+        .contact-info {
+          margin-left: 8px;
+          font-weight: 500;
+          font-size: 15px;
+          color: #050505;
+        }
+        .space-for-scrolling {
+          height: 300px;
+        }
+
+        .for-tooltip {
+          position: relative;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .for-tooltip .tooltip {
+          position: absolute;
+          bottom: -35px;
+          color: white;
+          font-size: 13px;
+          background-color: rgba(0, 0, 0, 0.658);
+          padding: 8px 10px 8px 10px;
+          border-radius: 7px;
+          transition: opacity 0.15s;
+          pointer-events: none;
+          white-space: nowrap;
+          opacity: 0;
+        }
+        .for-tooltip:hover .tooltip {
+          opacity: 1;
+        }
+      }
+      .media {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 23px;
+      }
+      .post {
+        width: 500px;
+        height: 120px;
+        box-shadow: 0 0 3px rgba(0,0,0,0.3);
+        background-color: white;
+        border-radius: 10px;
+      }
+      .first-row {
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        margin-left: 13px;
+        margin-top: 10px;
+        margin-right: 10px;
+        border-bottom-style: solid;
+        border-bottom-width: 1.5px;
+        border-bottom-color:rgb(233,235,238);
+        padding-bottom: 10px;
+      }
+      .user-post-dp {
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+        border-radius: 100px;
+        cursor: pointer;
+      }
+      .post-bar-sect {
+        display: flex;
+        flex: 1;
+        margin-left: 10px;
+      }
+      .post-bar {
+        flex: 1;
+        padding:12px 0 10px 13px;
+        border: none;
+        background-color: rgb(233,235,238);
+        border-radius: 20px;
+        transition: background-color 0.15s;
+
+
+      }
+      .post-bar::placeholder {
+        font-size: 15px;
+      }
+      .post-bar:hover {
+        background-color:rgba(207, 211, 216, 0.763);
+      }
+      .second-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 12px 13px 0 13px;
+      }
+      .post-sect-icon {
+        width: 25px;
+        height: 25px;
+        object-fit: cover;
+        margin-right: 7px;
+      }
+      .live-sect,
+      .photo-sect,
+      .feel-sect {
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 500;
+        color: rgb(96, 96, 96);
+        padding: 7px 25px 7px 25px;
+        border-radius: 5px;
+        transition: background-color 0.15s;
+      }
+      .live-sect:hover,
+      .photo-sect:hover,
+      .feel-sect:hover {
+        background-color:rgba(207, 211, 216, 0.763);
+      }
+      .posts {
+        width: 500px;
+        height: 680px;
+        box-shadow: 0 0 3px rgba(0,0,0,0.3);
+        background-color: white;
+        border-radius: 10px;
+        margin-top: 17px;
+      }
+      .post-user {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 5px;
+      }
+      .user-column {
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        margin-left: 13px;
+      }
+      .post-info {
+        margin: 0;
+        line-height: 7px;
+        font-size: 14px;
+        margin-left: 8px;
+        color: rgb(96, 96, 96);
+        font-weight: 500;
+        cursor: pointer;
+      }
+      .post-info span {
+        color: black;
+        font-weight: bold;
+      }
+      .post-info .timings {
+        font-size: 11px;
+      }
+      .more-info {
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        margin-right: 18px;
+      }
+      .more-info-dots {
+        padding-bottom: 10px;
+        font-weight: 1000;
+        margin-top: 7px;
+        font-size: 15px;
+        color: #65676B;
+        cursor: pointer;
+        padding-right: 7.2px;
+        padding-left: 7.7px;
+        border-radius: 20px;
+        transition: background-color 0.15s;
+      }
+      .more-info-dots:hover {
+        background-color:  rgba(207, 211, 216, 0.763);
+      }
+      .more-info .cross {
+        color: #65676B;
+        margin-left: 10px;
+        font-size: 35px;
+        cursor: pointer;
+      }
+      .user-lines {
+        font-size: 15px;
+        margin-left: 13px;
+        margin-bottom: 10px;
+      }
+      .post-image-sect {
+        width: 500px;
+        height: 500px;
+        cursor: pointer;
+
+
+      }
+      .post-image {
+        width: 500px;
+        height: 500px;
+        object-fit: contain;
+      }
+      .reactions-row {
+        color:rgb(96, 96, 96);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;  
+        padding-bottom: 5px;
+        margin: 7px 15px 5px 13px;
+        border-bottom-style: solid;
+        border-bottom-color:rgb(214, 216, 221);
+        border-bottom-width: 1.2px;
+      }
+      .reactions {
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        font-size: 15px;
+      }
+      .reactions img {
+        width: 30px;
+        height: 30px;
+        object-fit : cover;
+        cursor: pointer;
+
+      }
+      .like {
+        margin-right: -17px;
+      }
+      .stats {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100px;
+      }
+      .stats img {
+        width: 18px;
+        height: 18px;
+        object-fit: cover;
+        cursor: pointer;
+      }
+      .stats div {
+        font-size: 15px;
+      }
+      .likes-comment-sect {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-left:13px;
+        margin-right: 15px;
+        
+      }
+      .likes-comment-sect img {
+        width: 20px;
+        height: 20px;
+        object-fit: cover;
+      }
+
+      .like-sect,
+      .comment-sect,
+      .share-sect {
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        font-size: 15px;
+        font-weight: 500;
+        color: rgb(96, 96, 96);
+        padding: 5px 44px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.15s;
+      }
+      .like-sect img,
+      .comment-sect img,
+      .share-sect img {
+        margin-right: 5px;
+      }
+      .like-sect:hover,
+      .comment-sect:hover,
+      .share-sect:hover {
+        background-color: rgb(214, 216, 221);
+      }
+      .line1,
+      .timings,
+      .like-count,
+      .comment-count,
+      .share-count {
+        transition: text-decoration 0.15s;
+      }
+
+      .line1:hover ,
+      .timings:hover,
+      .like-count:hover,
+      .comment-count:hover,
+      .share-count:hover {
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    
+      
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="left-section">
+        <img class="fb-icon" src="icons/fb.jpg">
+        <img class="search-icon" src="icons/pngaaa.com-1962839.png">
+        <input class="search" type="text" placeholder="Search Facebook">
+      </div>
+      <div class="middle-section">
+        <div class="blue-h">
+          <img class="home-icon" src="icons/add-facebook-icon-to-home-page-66.png">
+          <div class="blue-bar"></div>
+          <div class="tooltip-h">Home</div>
+        </div>
+        <div class="blue">
+          <img class="video-icon" src="icons/fb-video.webp">
+          <div class="tooltip">Video</div>
+        </div>
+        <div class="blue">
+          <img class="market-icon" src="icons/fb-market.png">
+          <div class="tooltip">Marketplace</div>
+        </div>
+        <div class="blue">
+          <img class="group-icon" src="icons/fb-groups.jpg">
+          <div class="tooltip">Groups</div>
+        </div>
+        <div class="blue">
+          <img class="games-icon" src="icons/fb-games.jpg">
+          <div class="tooltip">Gaming</div>
+        </div>
+        
+      </div>
+
+      <div class="right-section">
+        <div class="apps">
+          <img class="apps-icon" src="icons/fb-apps.jpg">
+          <div class="tooltip">Menu</div>
+        </div>
+        <div class="messenger">
+          <img class="message-icon" src="icons/messges.png">
+          <div class="tooltip">Messenger</div>
+        </div>
+        <div class="notifications">
+          <img class="bell-icon" src="icons/bell-notification-icon-18.jpg">
+          <div class="tooltip">Notifications</div>
+          <div class="count">16</div>
+        </div>
+        <div class="account">
+          <img class="profile-icon" src="icons/profile.jpg">
+          <div class="tooltip">Account</div>
+        </div>
+        
+        
+
+      </div>
+
+    </header>
+    <nav class="sidebar">
+      <div class="sidebar-link">
+        <div class="profile">
+          <img class="profile-account" src="icons/profile.jpg">
+        </div>
+        <div>MJ Jamal</div>
+      </div>
+      <div class="sidebar-link">
+        <img class="friend-icon" src="icons/friend.png">
+        <div>Friends</div>
+      </div> 
+      <div class="sidebar-link">
+        <img class="funds" src="icons/fb-fund.jpg">
+        <div>Funds Raiser</div>
+      </div> 
+      <div class="sidebar-link">
+        <img class="video" src="icons/fb-vid.png">
+        <div>Videos</div>
+      </div> 
+      <div class="sidebar-link">
+        <img class="marketplace" src="icons/fb-market.png">
+        <div>Marketplace</div>
+      </div>
+      <div class="sidebar-link">
+        <img class="feeds" src="icons/fb-feeds.png">
+        <div>Feeds</div>
+      </div> 
+      <div class="sidebar-link">
+        <img class="events" src="icons/fb-events.jpg">
+        <div>Events</div>
+      </div>  
+
+      <div class="sidebar-link">
+        <img class="memories" src="icons/fb-memories.png">
+        <div>Memories</div>
+      </div>  
+      <div class="sidebar-link">
+        <img class="saved" src="icons/fb-save.png">
+        <div>Saved</div>
+      </div>  
+      <div class="sidebar-link">
+        <img class="groups" src="icons/fb-groupss.jpg">
+        <div>Groups</div>
+      </div>  
+
+      <div class="sidebar-link">
+        <img class="ads" src="icons/fb-graph.png">
+        <div>Ads Manager</div>
+      </div> 
+
+      <div class="sidebar-link">
+        <img class="slide" src="icons/down-arrow_151851.png">
+        See More
+      </div>  
+        
+    </nav>
+
+    <div class="shorts">
+      <div class="container">
+        <div class="image-section">
+          <img class="image" src="icons/profile.jpg">
+          
+        </div>
+        <div class="overlay">
+  
+        </div>
+        <div class="text">
+          Create Story
+        </div>
+        <div class="add">
+          <button>+</button>
+        </div>
+      
+      </div>
+      <div class="container1">
+        <div class="image-section1">
+          <img class="image1" src="shorts/1691053816002.jpg">
+        </div>
+        <div class="shade"></div>
+        <div class="text1">Ayanokouji</div>
+        <div class="dp-icon">
+          <img class="dp-image" src="shorts/1691053815886.jpg">
+        </div>
+        <div class="overlay1"></div>
+      </div>
+      <div class="container1">
+        <div class="image-section1">
+          <img class="image1" src="shorts/1691053815886.jpg">
+        </div>
+        <div class="shade"></div>
+        <div class="text1">Johan Liebert</div>
+        <div class="dp-icon">
+          <img class="dp-image" src="shorts/1691053816002.jpg">
+        </div>
+        <div class="overlay1"></div>
+      </div>
+      <div class="container1">
+        <div class="image-section1">
+          <img class="image1" src="shorts/IMG_1326.jpg">
+        </div>
+        <div class="shade"></div>
+        <div class="text1">Mohaseen</div>
+        <div class="dp-icon">
+          <img class="dp-image" src="shorts/1691053899824.png">
+        </div>
+        <div class="overlay1"></div>
+      </div>
+      
+    </div>
+
+    <nav class="contacts-sidebar">
+      <div class="contact-flex">
+        <div class="title">Contacts</div>
+        
+        <div class="contact-search">
+          <div class="for-tooltip">
+            <img class="search-contact" src="icons/pngaaa.com-1962839.png">
+            <div class="tooltip">Contacts</div>
+          </div>
+
+        <div class="for-tooltip">
+          <div class="three-dots">&#x2026;</div>
+          <div class="tooltip">More</div>
+        </div>
+
+        </div>
+      </div>
+      <div class="contacts">
+        <div class="contact-dp">
+          <img class="dpc" src="icons/profile.jpg">
+          <div class="active"></div>
+        </div>
+        <div class="contact-info">Raja Sekhar</div>
+      </div>
+      <div class="contacts">
+        <div class="contact-dp">
+          <img class="dpc" src="contacts-dp/bharath.jpg">
+          <div class="active"></div>
+        </div>
+        <div class="contact-info">C Bharath Kumar</div>
+      </div>
+      <div class="contacts">
+        <div class="contact-dp">
+          <img class="dpc" src="contacts-dp/dhana.jpg">
+          <div class="active"></div>
+        </div>
+        <div class="contact-info">Gaddam Dhana Sekhar</div>
+      </div>
+      <div class="contacts">
+        <div class="contact-dp">
+          <img class="dpc" src="contacts-dp/mani.jpg">
+          <div class="active"></div>
+        </div>
+        <div class="contact-info">Narem Mani Kumar Reddy</div>
+      </div>
+      <div class="contacts">
+        <div class="contact-dp">
+          <img class="dpc" src="contacts-dp/me.jpg">
+          <div class="active"></div>
+        </div>
+        <div class="contact-info">MJ Jamal</div>
+      </div>
+      <div class="contacts">
+        <div class="contact-dp">
+          <img class="dpc" src="contacts-dp/pavan.jpg">
+          <div class="active"></div>
+        </div>
+        <div class="contact-info">S Pavan Kumar</div>
+      </div>
+      <div class="contacts">
+        <div class="contact-dp">
+          <img class="dpc" src="icons/profile.jpg">
+          <div class="inactive">5m ago</div>
+        </div>
+        <div class="contact-info">Raja Sekhar</div>
+      </div>
+      <div class="contacts">
+        <div class="contact-dp">
+          <img class="dpc" src="contacts-dp/teja.jpg">
+          <div class="inactive">9m ago</div>
+        </div>
+        <div class="contact-info">Tejonath Reddy</div>
+      </div>
+
+      <div class="contacts">
+        <div class="contact-dp">
+          <img class="dpc" src="contacts-dp/tejesh.jpg">
+          <div class="inactive">1h ago</div>
+        </div>
+        <div class="contact-info">T Tejesh</div>
+      </div>
+      <div class="contacts">
+        <div class="contact-dp">
+          <img class="dpc" src="contacts-dp/vicra.jpg">
+          <div class="inactive">2h ago</div>
+        </div>
+        <div class="contact-info">Vicra Rajesh</div>
+      </div>
+      <div class="contacts">
+        <div class="contact-dp">
+          <img class="dpc" src="contacts-dp/IMG_1326.jpg">
+          <div class="inactive">5h ago</div>
+        </div>
+        <div class="contact-info">M Mohammad Mohasin</div>
+      </div>
+      <div class="contacts">
+        <div class="contact-dp">
+          <img class="dpc" src="contacts-dp/IMG_20220121_115634.jpg">
+          <div class="inactive">10h ago</div>
+        </div>
+        <div class="contact-info">M Koushik Reddy</div>
+      </div>
+      <div class="contacts">
+        <div class="contact-dp">
+          <img class="dpc1" src="contacts-dp/IMG_20230115_120303.jpg">
+        </div>
+        <div class="contact-info">Thoufiq</div>
+      </div>
+      <div class="contacts">
+        <div class="contact-dp">
+          <img class="dpc1" src="contacts-dp/IMG-20220412-WA0003.jpg">
+        </div>
+        <div class="contact-info">Lakshman</div>
+      </div>
+      <div class="contacts">
+        <div class="contact-dp">
+          <img class="dpc1" src="contacts-dp/IMG-20230430-WA0048.jpg">
+        </div>
+        <div class="contact-info">Charan Justin</div>
+      </div>
+      <div class="contacts">
+        <div class="contact-dp">
+          <img class="dpc1" src="contacts-dp/IMG-20230510-WA0030.jpg">
+        </div>
+        <div class="contact-info">Arman Malik</div>
+      </div>
+      <div class="contacts">
+        <div class="contact-dp">
+          <img class="dpc1" src="contacts-dp/WA-IMG-20220427-4590b8a7.jpg">
+        </div>
+        <div class="contact-info">Shaik Mohin</div>
+      </div>
+      <div class="contacts">
+        <div class="contact-dp">
+          <img class="dpc1" src="contacts-dp/WA-IMG-20200824-50ed1ed0.jpg">
+        </div>
+        <div class="contact-info">Shifa Harmeen</div>
+      </div>
+      <div class="space-for-scrolling">
+      </div>
+    </nav>
+    <main>
+      <section class="media">
+        <div class="post">
+          <div class="first-row">
+            <img class="user-post-dp" src="icons/profile.jpg">
+            <div class="post-bar-sect">
+              <input class="post-bar" type="text" placeholder="What's on your mind, MJ?">
+            </div>
+          </div>
+          <div class="second-row">
+            <div class="live-sect">
+              <img class="post-sect-icon" src="icons/live-video.png">
+              Live video
+            </div>
+            <div class="photo-sect">
+              <img class="post-sect-icon" src="icons/photo-video.png">
+              Photo/video
+            </div>
+            <div class="feel-sect">
+              <img class="post-sect-icon" src="icons/feeling.png">
+              Feeling/activity
+            </div>
+          </div>
+        </div>
+        <div class="posts">
+          <div class="post-user">
+            <div class="user-column">
+              <img class="user-post-dp" src="contacts-dp/mani.jpg">
+              <div class="post-info">
+                <p class="line1">
+                  <span>Narem Mani Kumar</span> is in <span>Madanapalli.</span>
+                </p>
+                <p class="timings">
+                  03 January at 19:07 &middot; &#127760;
+                </p>
+              </div>
+            </div>
+  
+            <div class="more-info">
+              <div class="more-info-dots">&#x2026;</div>
+              <div class="cross">&times;</div>
+            </div>
+          </div>
+          <div class="user-lines">
+            Feeling Proud of Tollywood Heroes...
+          </div>
+          <div class="post-image-sect">
+            <img class="post-image" src="fb-posts/heroes-post.jpg">
+          </div>
+          <div class="reactions-row">
+            <div class="reactions ">
+              <img class="like" src="fb-emojis/like.png">
+              <img class="heart" src="fb-emojis/heart.png">
+              <div class="like-count">40</div>
+            </div>
+            <div class="stats">
+              <div class="comment-count">193</div>
+              <img src="fb-emojis/comments-dark.png">
+              <div class="share-count">62</div>
+              <img src="fb-emojis/share-dark.png">
+            </div>
+          </div>
+          <div class="likes-comment-sect">
+            <div class="like-sect">
+              <img src="fb-emojis/like1.png">
+              Like
+            </div>
+            <div class="comment-sect">
+              <img src="fb-emojis/comments.png">
+              Comment
+            </div>
+            <div class="share-sect">
+              <img src="fb-emojis/share.png">
+              Share
+            </div>
+          </div>
+  
+        </div>
+        <div class="posts">
+          <div class="post-user">
+            <div class="user-column">
+              <img class="user-post-dp" src="fb-channels/channel-3.jpg">
+              <div class="post-info">
+                <p class="line1">
+                  <span>No One Cares</span>
+                </p>
+                <p class="timings">
+                  36 m &middot; &#127760;
+                </p>
+              </div>
+            </div>
+  
+            <div class="more-info">
+              <div class="more-info-dots">&#x2026;</div>
+              <div class="cross">&times;</div>
+            </div>
+          </div>
+          <div class="user-lines">
+            World's best quotes
+          </div>
+          <div class="post-image-sect">
+            <img class="post-image" src="fb-posts/post-1.jpg">
+          </div>
+          <div class="reactions-row">
+            <div class="reactions ">
+              <img class="like" src="fb-emojis/like.png">
+              <img class="heart" src="fb-emojis/heart.png">
+              <div class="like-count">15K</div>
+            </div>
+            <div class="stats">
+              <div class="comment-count">1.5K</div>
+              <img src="fb-emojis/comments-dark.png">
+              <div class="share-count">300</div>
+              <img src="fb-emojis/share-dark.png">
+            </div>
+          </div>
+          <div class="likes-comment-sect">
+            <div class="like-sect">
+              <img src="fb-emojis/like1.png">
+              Like
+            </div>
+            <div class="comment-sect">
+              <img src="fb-emojis/comments.png">
+              Comment
+            </div>
+            <div class="share-sect">
+              <img src="fb-emojis/share.png">
+              Share
+            </div>
+          </div>
+  
+        </div>
+        <div class="posts">
+          <div class="post-user">
+            <div class="user-column">
+              <img class="user-post-dp" src="fb-channels/knowledge.jpg">
+              <div class="post-info">
+                <p class="line1">
+                  <span>The Knowledge Factory</span>
+                </p>
+                <p class="timings">
+                  1 month ago &middot; &#127760;
+                </p>
+              </div>
+            </div>
+  
+            <div class="more-info">
+              <div class="more-info-dots">&#x2026;</div>
+              <div class="cross">&times;</div>
+            </div>
+          </div>
+          <div class="user-lines">
+            #FACTS...
+          </div>
+          <div class="post-image-sect">
+            <img class="post-image" src="fb-posts/knowlede-post.jpg">
+          </div>
+          <div class="reactions-row">
+            <div class="reactions ">
+              <img class="like" src="fb-emojis/like.png">
+              <img class="heart" src="fb-emojis/heart.png">
+              <div class="like-count">2.2K</div>
+            </div>
+            <div class="stats">
+              <div class="comment-count">565</div>
+              <img src="fb-emojis/comments-dark.png">
+              <div class="share-count">201</div>
+              <img src="fb-emojis/share-dark.png">
+            </div>
+          </div>
+          <div class="likes-comment-sect">
+            <div class="like-sect">
+              <img src="fb-emojis/like1.png">
+              Like
+            </div>
+            <div class="comment-sect">
+              <img src="fb-emojis/comments.png">
+              Comment
+            </div>
+            <div class="share-sect">
+              <img src="fb-emojis/share.png">
+              Share
+            </div>
+          </div>
+  
+        </div>
+        <div class="posts">
+          <div class="post-user">
+            <div class="user-column">
+              <img class="user-post-dp" src="fb-channels/channel-1.jpg">
+              <div class="post-info">
+                <p class="line1">
+                  <span>Y O U R  F E E L I N G S</span>
+                </p>
+                <p class="timings">
+                  26 December 2023 at 14:30 &middot; &#127760;
+                </p>
+              </div>
+            </div>
+  
+            <div class="more-info">
+              <div class="more-info-dots">&#x2026;</div>
+              <div class="cross">&times;</div>
+            </div>
+          </div>
+          <div class="user-lines">
+            - W o r l d s !
+          </div>
+          <div class="post-image-sect">
+            <img class="post-image" src="fb-posts/post-2.jpg">
+          </div>
+          <div class="reactions-row">
+            <div class="reactions ">
+              <img class="like" src="fb-emojis/like.png">
+              <img class="heart" src="fb-emojis/heart.png">
+              <div class="like-count">154</div>
+            </div>
+            <div class="stats">
+              <div class="comment-count">113</div>
+              <img src="fb-emojis/comments-dark.png">
+              <div class="share-count">25</div>
+              <img src="fb-emojis/share-dark.png">
+            </div>
+          </div>
+          <div class="likes-comment-sect">
+            <div class="like-sect">
+              <img src="fb-emojis/like1.png">
+              Like
+            </div>
+            <div class="comment-sect">
+              <img src="fb-emojis/comments.png">
+              Comment
+            </div>
+            <div class="share-sect">
+              <img src="fb-emojis/share.png">
+              Share
+            </div>
+          </div>
+  
+        </div>
+        <div class="posts">
+          <div class="post-user">
+            <div class="user-column">
+              <img class="user-post-dp" src="fb-channels/channel-2.jpg">
+              <div class="post-info">
+                <p class="line1">
+                  <span>Anime Memer</span>
+                </p>
+                <p class="timings">
+                  17 February at 18:12 &middot; &#127760;
+                </p>
+              </div>
+            </div>
+  
+            <div class="more-info">
+              <div class="more-info-dots">&#x2026;</div>
+              <div class="cross">&times;</div>
+            </div>
+          </div>
+          <div class="user-lines">
+            Manwha Anime
+          </div>
+          <div class="post-image-sect">
+            <img class="post-image" src="fb-posts/post-4.jpg">
+          </div>
+          <div class="reactions-row">
+            <div class="reactions ">
+              <img class="like" src="fb-emojis/like.png">
+              <img class="heart" src="fb-emojis/heart.png">
+              <div class="like-count">40K</div>
+            </div>
+            <div class="stats">
+              <div class="comment-count">13K</div>
+              <img src="fb-emojis/comments-dark.png">
+              <div class="share-count">5.9K</div>
+              <img src="fb-emojis/share-dark.png">
+            </div>
+          </div>
+          <div class="likes-comment-sect">
+            <div class="like-sect">
+              <img src="fb-emojis/like1.png">
+              Like
+            </div>
+            <div class="comment-sect">
+              <img src="fb-emojis/comments.png">
+              Comment
+            </div>
+            <div class="share-sect">
+              <img src="fb-emojis/share.png">
+              Share
+            </div>
+          </div>
+  
+        </div>
+  
+      </section>
+    </main>
+
+
+
+    
+  </body>
+</html>
